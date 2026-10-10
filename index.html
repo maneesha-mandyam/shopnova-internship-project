@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ShopNova responsive e-commerce product catalog">
+<title>ShopNova | Discover Your Style</title>
+<style>
+:root{--purple:#7655e8;--dark:#1b1935;--bg:#f7f6fc;--muted:#89869b;--border:#e9e5f3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#37344b;font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+button,input,select{font:inherit}
+button,a{cursor:pointer}
+a{text-decoration:none;color:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f0a72d;outline-offset:3px}
+header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px max(18px,calc((100% - 1120px)/2));background:#fff;border-bottom:1px solid var(--border)}
+.logo{font-size:25px;font-weight:900;color:var(--dark)}
+.logo span{color:var(--purple)}
+nav{display:flex;gap:22px}
+nav a{font-size:14px;font-weight:bold}
+nav a:hover{color:var(--purple)}
+.cart-link{background:#f0ebff;border-radius:10px;padding:9px 12px;font-weight:bold}
+#count{display:inline-grid;place-items:center;background:var(--purple);color:#fff;border-radius:50%;min-width:23px;height:23px}
+.hero{background:radial-gradient(circle at 85% 20%,#60449e,transparent 32%),linear-gradient(130deg,#17152f,#32245e);color:#fff;padding:70px 22px}
+.hero-inner{max-width:1080px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:35px}
+.eyebrow{font-size:12px;letter-spacing:1.5px;font-weight:bold;color:var(--purple);text-transform:uppercase}
+.hero .eyebrow{color:#d6caff}
+h1{font-size:clamp(38px,6vw,65px);line-height:1.1;letter-spacing:-1.8px;margin:15px 0}
+.hero h1 span{color:#c7aaff}
+.hero p{color:#d5d0e4;max-width:500px}
+.hero-art{min-height:250px;border-radius:28px;display:grid;place-items:center;background:linear-gradient(140deg,#9270ed,#f3b8d5);font-size:115px;box-shadow:0 20px 45px #0003}
+.btn{display:inline-block;background:var(--purple);color:white;border:0;border-radius:10px;padding:11px 17px;font-weight:bold}
+.btn:hover{background:#593ac4}
+.btn-light{background:white;color:var(--dark);margin-top:12px}
+.container{max-width:1120px;margin:auto;padding:45px 22px}
+.heading{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:22px}
+.heading h2{font-size:30px;color:var(--dark);margin:5px 0}
+.heading p{color:var(--muted);margin:0}
+.catalog-tools{display:grid;grid-template-columns:1fr 190px;gap:12px;margin:24px 0 16px}
+input,select{width:100%;min-width:0;padding:13px;border:1px solid var(--border);border-radius:10px;background:#fff}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 23px}
+.filter{border:1px solid var(--border);background:#fff;border-radius:30px;padding:8px 15px}
+.filter.active,.filter:hover{background:var(--dark);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:17px;box-shadow:0 8px 24px #29204b0b;transition:transform .2s}
+.card:hover{transform:translateY(-5px)}
+.product-art{display:grid;place-items:center;min-height:165px;background:var(--color);font-size:65px}
+.info{padding:16px}
+.category{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--purple);font-weight:bold}
+.info h3{margin:7px 0;color:var(--dark)}
+.info p{font-size:13px;color:var(--muted);min-height:40px;margin:5px 0}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px}
+.price{font-size:18px;font-weight:900;color:var(--dark)}
+.add{border:0;border-radius:8px;background:var(--purple);color:white;padding:9px 11px;font-weight:bold}
+.add:hover{background:#593ac4}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:35px}
+.benefit{background:white;border:1px solid var(--border);border-radius:14px;padding:20px}
+.benefit strong{color:var(--dark)}
+.benefit p{font-size:14px;color:var(--muted);margin-bottom:0}
+#results{color:var(--muted);font-size:14px}
+.cart-row{display:grid;grid-template-columns:65px 1fr auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--border)}
+.cart-icon{width:65px;height:65px;display:grid;place-items:center;border-radius:12px;background:var(--color);font-size:32px}
+.cart-row h3{margin:0;color:var(--dark)}
+.cart-row p{margin:3px 0;color:var(--muted);font-size:14px}
+.qty{display:flex;align-items:center;gap:10px;margin-top:7px}
+.qty button{border:0;border-radius:6px;padding:3px 10px;background:#eee9ff}
+.remove{display:block;border:0;background:none;color:#b33d59;padding:5px 0}
+.cart-layout{display:grid;grid-template-columns:1fr 290px;gap:20px;align-items:start}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px}
+.panel h2{margin-top:0;color:var(--dark)}
+.summary-line{display:flex;justify-content:space-between;gap:10px;padding:10px 0}
+.total{border-top:1px solid var(--border);margin-top:8px;padding-top:18px;font-size:19px;font-weight:bold}
+.full{width:100%;margin-top:12px}
+.note{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:45px 15px}
+.empty .emoji{font-size:60px}
+.empty p{color:var(--muted)}
+#toast{position:fixed;bottom:20px;right:20px;z-index:10;padding:13px 18px;background:var(--dark);color:white;border-radius:10px;box-shadow:0 5px 20px #0002;display:none}
+footer{text-align:center;background:var(--dark);color:#d4cde8;padding:30px 15px}
+footer p{margin:7px}
+footer small{color:#aaa2c5}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-inner{grid-template-columns:1fr .7fr}}
+@media(max-width:620px){header{flex-wrap:wrap;padding:12px 15px}nav{order:3;width:100%;justify-content:center;padding-top:10px;border-top:1px solid var(--border)}nav a{font-size:13px}.hero{padding:45px 18px}.hero-inner{grid-template-columns:1fr}.hero-art{min-height:170px;font-size:80px}.container{padding:32px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product-art{min-height:125px;font-size:48px}.info{padding:12px}.info h3{font-size:15px}.info p{font-size:12px;min-height:55px}.bottom{align-items:flex-start;flex-direction:column}.add{width:100%}.catalog-tools{grid-template-columns:1fr}.benefits{grid-template-columns:1fr}.cart-layout{grid-template-columns:1fr}.panel{padding:15px}.cart-row{grid-template-columns:48px 1fr;gap:10px}.cart-icon{width:48px;height:48px;font-size:25px}.cart-row>strong{grid-column:2}.heading h2{font-size:25px}}
+@media(max-width:350px){.grid{grid-template-columns:1fr}.product-art{min-height:160px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#/">shop<span>nova</span>.</a>
+  <nav aria-label="Main navigation">
+    <a href="#/">Home</a>
+    <a href="#/products">Products</a>
+    <a href="#/about">About</a>
+  </nav>
+  <a class="cart-link" href="#/cart">🛍️ Cart <span id="count">0</span></a>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <a class="logo" href="#/" style="color:white">shop<span>nova</span>.</a>
+  <p>Discover more. Shop smarter.</p>
+  <small>© 2026 ShopNova · Internship Capstone Project</small>
+</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const products = [
+  {id:1,name:"Cloud Sneakers",category:"Fashion",price:1499,icon:"👟",color:"#e8e0ff",description:"Everyday comfort with a modern look."},
+  {id:2,name:"Studio Headphones",category:"Electronics",price:2299,icon:"🎧",color:"#dce9ff",description:"Enjoy your favorite music in style."},
+  {id:3,name:"Classic Backpack",category:"Accessories",price:1199,icon:"🎒",color:"#ffe3d6",description:"A practical companion for every day."},
+  {id:4,name:"Smart Watch",category:"Electronics",price:3499,icon:"⌚",color:"#d7f4e8",description:"A sleek accessory for your daily routine."},
+  {id:5,name:"Everyday Sunglasses",category:"Accessories",price:899,icon:"🕶️",color:"#ffedc9",description:"A stylish finishing touch to your outfit."},
+  {id:6,name:"Minimal T-Shirt",category:"Fashion",price:699,icon:"👕",color:"#ffdeeb",description:"A versatile essential for your wardrobe."},
+  {id:7,name:"Wireless Speaker",category:"Electronics",price:1799,icon:"🔊",color:"#e0e3ff",description:"Bring music to your everyday moments."},
+  {id:8,name:"Travel Bottle",category:"Accessories",price:499,icon:"🧴",color:"#d6f3f4",description:"A reusable bottle for life on the go."}
+];
+
+const KEY = "shopnova-cart-v1";
+const app = document.getElementById("app");
+const countEl = document.getElementById("count");
+const toastEl = document.getElementById("toast");
+let category = "All", query = "", sort = "featured", toastTimer;
+
+function readCart(){
+  try {
+    const value = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return Array.isArray(value) ? value.filter(x =>
+      Number.isInteger(x.id) && Number.isInteger(x.qty) && x.qty > 0 &&
+      products.some(p => p.id === x.id)) : [];
+  } catch { return []; }
+}
+
+let cart = readCart();
+
+function saveCart(){
+  try {
+    localStorage.setItem(KEY, JSON.stringify(cart));
+    return true;
+  } catch {
+    toast("Could not save cart in this browser.");
+    return false;
+  }
+}
+
+function money(n){
+  return new Intl.NumberFormat("en-IN", {
+    style:"currency",currency:"INR",maximumFractionDigits:0
+  }).format(n);
+}
+
+function toast(text){
+  toastEl.textContent = text;
+  toastEl.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.style.display = "none", 2200);
+}
+
+function updateCount(){
+  countEl.textContent = cart.reduce((sum,item) => sum + item.qty,0);
+}
+
+function add(id){
+  const item = cart.find(x => x.id === id);
+  if(item) item.qty++;
+  else cart.push({id,qty:1});
+  saveCart();
+  updateCount();
+  toast("Product added to your cart!");
+}
+
+function productCard(p){
+  return `<article class="card">
+    <div class="product-art" style="--color:${p.color}" aria-hidden="true">${p.icon}</div>
+    <div class="info">
+      <span class="category">${p.category}</span>
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <div class="bottom">
+        <span class="price">${money(p.price)}</span>
+        <button class="add" data-action="add" data-id="${p.id}">+ Add to Cart</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function grid(items){
+  if(!items.length) return `<div class="empty"><div class="emoji">🔎</div><h2>No products found</h2><p>Try another search or category.</p></div>`;
+  return `<div class="grid">${items.map(productCard).join("")}</div>`;
+}
+
+function home(){
+  app.innerHTML = `<section class="hero"><div class="hero-inner">
+    <div><span class="eyebrow">A LITTLE SOMETHING FOR YOU</span>
+    <h1>Find your next <span>favorite.</span></h1>
+    <p>Discover everyday essentials, modern accessories and tech finds — all in one place.</p>
+    <a class="btn btn-light" href="#/products">Explore Collection →</a></div>
+    <div class="hero-art" aria-hidden="true">🛍️</div>
+  </div></section>
+  <section class="container">
+    <div class="heading"><div><span class="eyebrow">HANDPICKED FOR YOU</span><h2>Featured Finds</h2><p>Everyday products with a little extra style.</p></div><a href="#/products">View all →</a></div>
+    ${grid(products.slice(0,4))}
+    <div class="benefits">
+      <article class="benefit"><span>🚚</span><br><strong>Easy Shopping</strong><p>Browse products in one simple catalog.</p></article>
+      <article class="benefit"><span>💜</span><br><strong>Made for You</strong><p>Explore useful everyday essentials.</p></article>
+      <article class="benefit"><span>📱</span><br><strong>Shop Anywhere</strong><p>A responsive experience on every screen.</p></article>
+    </div>
+  </section>`;
+}
+
+function catalog(){
+  category = "All"; query = ""; sort = "featured";
+  app.innerHTML = `<section class="container">
+    <div class="heading"><div><span class="eyebrow">THE SHOPNOVA COLLECTION</span><h2>Explore Products</h2><p>Find something you'll love.</p></div></div>
+    <div class="catalog-tools">
+      <input id="search" type="search" placeholder="Search products..." aria-label="Search products">
+      <select id="sort" aria-label="Sort products">
+        <option value="featured">Featured</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+        <option value="name">Name: A to Z</option>
+      </select>
+    </div>
+    <div class="filters">${["All","Fashion","Electronics","Accessories"].map(c => `<button class="filter ${c==="All"?"active":""}" data-action="filter" data-category="${c}" aria-pressed="${c==="All"}">${c}</button>`).join("")}</div>
+    <p id="results" aria-live="polite"></p><div id="catalog-grid"></div>
+  </section>`;
+  renderCatalog();
+}
+
+function renderCatalog(){
+  const target = document.getElementById("catalog-grid");
+  if(!target) return;
+  let items = products.filter(p =>
+    (category === "All" || p.category === category) &&
+    (p.name+" "+p.category+" "+p.description).toLowerCase().includes(query.toLowerCase()));
+  if(sort==="low") items.sort((a,b)=>a.price-b.price);
+  if(sort==="high") items.sort((a,b)=>b.price-a.price);
+  if(sort==="name") items.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById("results").textContent = items.length+" product(s) found";
+  target.innerHTML = grid(items);
+}
+
+function cartPage(){
+  if(!cart.length){
+    app.innerHTML = `<section class="container"><span class="eyebrow">YOUR SHOPPING BAG</span><h1>Your Cart</h1><div class="empty"><div class="emoji">🛍️</div><h2>Your cart is waiting for you</h2><p>You haven't added anything yet.</p><a class="btn" href="#/products">Explore Products →</a></div></section>`;
+    return;
+  }
+  const total = cart.reduce((sum,item) => {
+    const p = products.find(x=>x.id===item.id);
+    return sum+(p?p.price*item.qty:0);
+  },0);
+  app.innerHTML = `<section class="container"><span class="eyebrow">ALMOST YOURS</span><h1>Your Cart</h1>
+    <div class="cart-layout"><div class="panel">${cart.map(item=>{
+      const p=products.find(x=>x.id===item.id);
+      return `<article class="cart-row">
+        <div class="cart-icon" style="--color:${p.color}" aria-hidden="true">${p.icon}</div>
+        <div><h3>${p.name}</h3><p>${money(p.price)} each</p>
+          <div class="qty"><button data-action="decrease" data-id="${p.id}" aria-label="Decrease quantity">−</button><span>${item.qty}</span><button data-action="increase" data-id="${p.id}" aria-label="Increase quantity">+</button></div>
+          <button class="remove" data-action="remove" data-id="${p.id}">Remove</button>
+        </div><strong>${money(p.price*item.qty)}</strong>
+      </article>`;
+    }).join("")}</div>
+    <aside class="panel"><h2>Order Summary</h2>
+      <div class="summary-line"><span>Subtotal</span><strong>${money(total)}</strong></div>
+      <div class="summary-line"><span>Delivery</span><strong>Free</strong></div>
+      <div class="summary-line total"><span>Total</span><span>${money(total)}</span></div>
+      <button class="btn full" data-action="checkout">Continue to Checkout</button>
+      <p class="note">Demo checkout only. No payment will be collected.</p>
+    </aside></div></section>`;
+}
+
+function about(){
+  app.innerHTML = `<section class="container"><span class="eyebrow">OUR LITTLE CORNER</span><h1>About ShopNova</h1><div class="panel"><h2>Simple shopping. Thoughtful design.</h2><p>ShopNova is an e-commerce capstone project demonstrating product search, category filters, sorting, cart management, browser storage and responsive web design.</p><p>This demonstration uses sample products and does not process real payments or orders.</p><a class="btn" href="#/products">Explore Products →</a></div></section>`;
+}
+
+function render(){
+  const route = location.hash.slice(1) || "/";
+  if(route==="/") home();
+  else if(route==="/products") catalog();
+  else if(route==="/cart") cartPage();
+  else if(route==="/about") about();
+  else app.innerHTML = `<section class="container empty"><h1>Page not found</h1><a class="btn" href="#/">Go Home</a></section>`;
+  updateCount();
+}
+
+app.addEventListener("input",e=>{
+  if(e.target.id==="search"){query=e.target.value;renderCatalog();}
+});
+
+app.addEventListener("change",e=>{
+  if(e.target.id==="sort"){sort=e.target.value;renderCatalog();}
+});
+
+app.addEventListener("click",e=>{
+  const b=e.target.closest("[data-action]");
+  if(!b)return;
+  const id=Number(b.dataset.id);
+  if(b.dataset.action==="add"){add(id);return;}
+  if(b.dataset.action==="filter"){
+    category=b.dataset.category;
+    document.querySelectorAll("[data-action='filter']").forEach(x=>{
+      const selected=x.dataset.category===category;
+      x.classList.toggle("active",selected);
+      x.setAttribute("aria-pressed",String(selected));
+    });
+    renderCatalog();
+  }
+  if(b.dataset.action==="increase"||b.dataset.action==="decrease"){
+    const item=cart.find(x=>x.id===id);
+    if(item){item.qty+=b.dataset.action==="increase"?1:-1;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);}
+    saveCart();render(); 
+  }
+  if(b.dataset.action==="remove"){cart=cart.filter(x=>x.id!==id);saveCart();render();toast("Product removed.");}
+  if(b.dataset.action==="checkout"&&confirm("Demo checkout only: no real payment will be taken. Clear the cart?")){
+    cart=[];saveCart();render();toast("Demo cart cleared.");
+  }
+});
+
+window.addEventListener("hashchange",render);
+render();
+</script>
+</body>
+</html>
